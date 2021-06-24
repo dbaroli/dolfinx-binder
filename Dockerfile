@@ -40,6 +40,7 @@ ENV PYVISTA_PLOT_THEME document
 ENV PYVISTA_AUTO_CLOSE false
 RUN adduser --disabled-password \
     --gecos "Default user" \
+    --uid ${NB_UID} \
     ${NB_USER}
 WORKDIR ${HOME}
 USER root
