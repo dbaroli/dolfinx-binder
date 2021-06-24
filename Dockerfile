@@ -16,19 +16,19 @@ RUN wget -qO - https://deb.nodesource.com/setup_16.x | bash && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Pyvista ITKWidgets dependencies
-RUN pip3 install --no-cache-dir --upgrade setuptools itkwidgets ipywidgets matplotlib pyvista ipyvtklink seaborn pandas
-RUN jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidgets
+RUN pip3 install --no-cache-dir --upgrade setuptools itkwidgets ipywidgets matplotlib pyvista ipyvtklink seaborn pandas 
+#
 
-
-
-
-# Install progress-bar
-RUN pip3 install tqdm pygments --upgrade
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab && \
     pip3 install --no-cache pyvista && \
     pip3 install --no-cache pyvirtualdisplay
 
+
+# Install progress-bar
+RUN pip3 install tqdm pygments --upgrade
+
+#RUN jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidgets
 # create user with a home directory
 ARG NB_USER
 ARG NB_UID
