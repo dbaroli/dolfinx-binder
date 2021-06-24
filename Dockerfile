@@ -26,6 +26,7 @@ RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache pyvista && \
     pip3 install --no-cache pyvirtualdisplay
 RUN jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidgets
+RUN pip3 install    https://github.com/michalhabera/dolfiny@master 
 
 # create user with a home directory
 ARG NB_USER
@@ -37,7 +38,6 @@ ENV PYVISTA_USE_PANEL true
 ENV PYVISTA_PLOT_THEME document
 # This is needed for Panel - use with cuation!
 ENV PYVISTA_AUTO_CLOSE false
-
 RUN adduser --disabled-password \
     --gecos "Default user" \
     --uid ${NB_UID} \
