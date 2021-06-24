@@ -39,7 +39,7 @@ ENV PYVISTA_USE_PANEL true
 ENV PYVISTA_PLOT_THEME document
 # This is needed for Panel - use with cuation!
 ENV PYVISTA_AUTO_CLOSE false
-
+RUN pip3 install -r requirements.txt
 RUN adduser --disabled-password \
     --gecos "Default user" \
     --uid ${NB_UID} \
@@ -47,7 +47,7 @@ RUN adduser --disabled-password \
 WORKDIR ${HOME}
 USER root
 COPY . ${HOME}
-RUN pip3 install -r requirements.txt
+
 RUN chown -R ${NB_USER} ${HOME}
 USER ${USER}
 # ENTRYPOINT ["jupyter", "notebook", "--ip", "0.0.0.0", "--no-browser", "--allow-root"]
