@@ -1,35 +1,4 @@
- FROM dolfinx/dev-env
-
-ARG DOLFINY_BUILD_TYPE=Release
-
-ARG UFL_GIT_COMMIT=3cdfb8a
-ARG BASIX_GIT_COMMIT=e7ff5c1
-ARG FFCX_GIT_COMMIT=14f9a1d
-ARG DOLFINX_GIT_COMMIT=f544b76
-
-ENV PYTHONDONTWRITEBYTECODE=1
-
-RUN git clone --branch main https://github.com/FEniCS/basix.git \
-        && cd basix \
-        && git checkout $BASIX_GIT_COMMIT \
-        && cmake -G Ninja -DCMAKE_BUILD_TYPE=$DOLFINY_BUILD_TYPE -B build -S . \
-        && cmake --build build \
-        && cmake --install build \
-        && python3 -m pip install ./python \
-    && \
-    pip3 install git+https://github.com/FEniCS/ufl.git@$UFL_GIT_COMMIT \
-    && \
-    pip3 install git+https://github.com/FEniCS/ffcx.git@$FFCX_GIT_COMMIT
-
-RUN git clone --branch main https://github.com/FEniCS/dolfinx.git \
-        && cd dolfinx \
-        && git checkout $DOLFINX_GIT_COMMIT \
-        && export PETSC_ARCH=linux-gnu-real-32 \
-        && cmake -G Ninja -DCMAKE_BUILD_TYPE=$DOLFINY_BUILD_TYPE -B build -S ./cpp/ \
-        && cmake --build build \
-        && cmake --install build \
-        && python3 -m pip install ./python
-
+FROM dbaroliaices/dolfiny:latest
 
 ENV HDF5_MPI="ON" \
     CC=mpicc \
@@ -48,7 +17,6 @@ RUN wget -qO - https://deb.nodesource.com/setup_16.x | bash && \
 
 # Pyvista ITKWidgets dependencies
 RUN pip3 install --no-cache-dir --upgrade setuptools itkwidgets ipywidgets matplotlib pyvista ipyvtklink seaborn pandas
-RUN jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidgets
 
 
 # Install progress-bar
@@ -57,6 +25,7 @@ RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab && \
     pip3 install --no-cache pyvista && \
     pip3 install --no-cache pyvirtualdisplay
+RUN jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidgets
 
 # create user with a home directory
 ARG NB_USER
