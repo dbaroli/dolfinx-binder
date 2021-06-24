@@ -26,7 +26,7 @@ RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache pyvista && \
     pip3 install --no-cache pyvirtualdisplay
 RUN jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidgets
-RUN pip3 install    https://github.com/michalhabera/dolfiny@master 
+RUN pip3 install    https://github.com/michalhabera/dolfiny.git@master 
 
 # create user with a home directory
 ARG NB_USER
